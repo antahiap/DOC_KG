@@ -11,7 +11,8 @@ Wanna be able to read a paper from a domain you know nothing about? Use our tool
 - Install the dependencies via pip or conda, e.g., python=3.9.6
 
 ```
-    python -m venv ens
+    conda create --prefix ./env-doc-kg python=3.12 -y
+    conda activate ./env-doc-kg
     pip install -r requirements.txt
 ```
 

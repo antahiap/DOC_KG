@@ -16,4 +16,4 @@ matplotlib
 pytz
 python-docx
 networkx==3.2.1
-RapidFuzz
+mistralai

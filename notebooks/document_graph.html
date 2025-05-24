@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 800px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "content": "", "font": {"color": "black"}, "id": "https://arxiv.org/pdf/2201.04234", "label": "https://arxiv.org/pdf/2201.04234", "name": "file_name", "shape": "dot", "size": 10, "type": "Document"}, {"color": "#97c2fc", "content": "", "font": {"color": "black"}, "id": "page_1", "label": "page_1", "shape": "dot", "size": 10, "type": "Page"}, {"color": "#97c2fc", "content": "", "font": {"color": "black"}, "id": "page_2", "label": "page_2", "shape": "dot", "size": 10, "type": "Page"}, {"color": "#97c2fc", "content": "", "font": {"color": "black"}, "id": "page_3", "label": "page_3", "shape": "dot", "size": 10, "type": "Page"}, {"color": "#97c2fc", "content": "LEVERAGING UNLABELED DATA TO PREDICT OUT-OF-DISTRIBUTION PERFORMANCE ", "font": {"color": "black"}, "id": "title_0", "label": "LEVERAGING UNLABELED DATA TO PREDICT OUT-OF-DISTRIBUTION PERFORMANCE ", "level": 1, "shape": "dot", "size": 10, "type": "Title"}, {"color": "#97c2fc", "content": "2 PRIOR WORK ", "font": {"color": "black"}, "id": "title_1", "label": "2 PRIOR WORK ", "level": 2, "shape": "dot", "size": 10, "type": "Title"}, {"color": "#97c2fc", "content": "Abstract", "font": {"color": "black"}, "id": "title_2", "label": "Abstract", "level": 4, "shape": "dot", "size": 10, "type": "Header"}, {"color": "#97c2fc", "content": "1 INTRODUCTION", "font": {"color": "black"}, "id": "title_3", "label": "1 INTRODUCTION", "level": 2, "shape": "dot", "size": 10, "type": "Header"}, {"color": "#97c2fc", "content": "2 PRIOR WORK ", "font": {"color": "black"}, "id": "title_4", "label": "2 PRIOR WORK ", "level": 1, "shape": "dot", "size": 10, "type": "Header"}, {"color": "#97c2fc", "content": "ATC is simple to implement with existing frameworks, compatible with arbitrary model classes, and dominates other contemporary methods. Across several model architectures on a range of benchmark vision and language datasets, we verify that ATC outperforms prior methods by at least $2-4 \\times$ in predicting target accuracy on a variety of distribution shifts. In particular, we consider shifts due to common corruptions (e.g., ImageNet-C), natural distribution shifts due to dataset reproduction (e.g., ImageNet-v2, ImageNet-R), shifts due to novel subpopulations (e.g., BREEDS), and distribution shifts faced in the wild (e.g., WILDS).\n\nAs a starting point for theory development, we investigate ATC on a simple toy model that models distribution shift with varying proportions of the population with spurious features, as in Nagarajan et al. (2020). Finally, we note that although ATC achieves superior performance in our empirical evaluation, like all methods, it must fail (returns inconsistent estimates) on certain types of distribution shifts, per our impossibility result.\n\n# 2 PRIOR WORK \n\nOut-of-distribution detection. The main goal of OOD detection is to identify previously unseen examples, i.e., samples out of the support of training distribution. To accomplish this, modern methods utilize confidence or features learned by a deep network trained on some source data. Hendrycks \\\u0026 Gimpel (2016); Geifman \\\u0026 El-Yaniv (2017) used the confidence score of an (already) trained deep model to identify OOD points. Lakshminarayanan et al. (2016) use entropy of an ensemble model to evaluate prediction uncertainty on OOD points. To improve OOD detection with model confidence, Liang et al. (2017) propose to use temperature scaling and input perturbations. Jiang et al. (2018) propose to use scores based on the relative distance of the predicted class to the second class. Recently, residual flow-based methods were used to obtain a density model for OOD detection (Zhang et al., 2020). Ji et al. (2021) proposed a method based on subfunction error bounds to compute unreliability per sample. Refer to Ovadia et al. (2019); Ji et al. (2021) for an overview and comparison of methods for prediction uncertainty on OOD data.\n\nPredicting model generalization. Understanding generalization capabilities of overparameterized models on in-distribution data using conventional machine learning tools has been a focus of a long line of work; representative research includes Neyshabur et al. (2015; 2017); Neyshabur (2017); Neyshabur et al. (2018); Dziugaite \\\u0026 Roy (2017); Bartlett et al. (2017); Zhou et al. (2018); Long \\\u0026 Sedghi (2019); Nagarajan \\\u0026 Kolter (2019a). At a high level, this line of research bounds the generalization gap directly with complexity measures calculated on the trained model. However, these bounds typically remain numerically loose relative to the true generalization error (Zhang et al., 2016; Nagarajan \\\u0026 Kolter, 2019b). On the other hand, another line of research departs from complexitybased approaches to use unseen unlabeled data to predict in-distribution generalization (Platanios et al., 2016; 2017; Garg et al., 2021; Jiang et al., 2021).\n\nRelevant to our work are methods for predicting the error of a classifier on OOD data based on unlabeled data from the target (OOD) domain. These methods can be characterized into two broad categories: (i) Methods which explicitly predict correctness of the model on individual unlabeled points (Deng \\\u0026 Zheng, 2021; Jiang et al., 2021; Deng et al., 2021; Chen et al., 2021a); and (ii) Methods which directly obtain an estimate of error with unlabeled OOD data without making a point-wise prediction (Chen et al., 2021b; Guillory et al., 2021; Chuang et al., 2020).\nTo achieve a consistent estimate of the target accuracy, Jiang et al. (2021); Guillory et al. (2021) require calibration on target domain. However, these methods typically yield poor estimates as deep models trained and calibrated on some source data are seldom calibrated on previously unseen domains (Ovadia et al., 2019). Additionally, Deng \\\u0026 Zheng (2021); Guillory et al. (2021) derive model-based distribution statistics on unlabeled target set that correlate with the target accuracy and propose to use a subset of labeled target domains to learn a (linear) regression function that predicts model performance. However, there are two drawbacks with this approach: (i) the correlation of these distribution statistics can vary substantially as we consider different nature of shifts (refer to Sec. 5.1, where we empirically demonstrate this failure); (ii) even if there exists a (hypothetical) statistic with strong correlations, obtaining labeled target domains (even simulated ones) with strong correlations would require significant a priori knowledge about the nature of shift that, in general, might not be available before models are deployed in the wild. Nonetheless, in our work, we only assume access to labeled data from the source domain presuming no access to labeled target domains or information about how to simulate them.", "font": {"color": "black"}, "id": "paragraph_0", "label": "ATC is simple to implement with existing frameworks, compatible with arbitrary model classes, and dominates other contemporary methods. Across several model architectures on a range of benchmark vision and language datasets, we verify that ATC outperforms prior methods by at least $2-4 \\times$ in predicting target accuracy on a variety of distribution shifts. In particular, we consider shifts due to common corruptions (e.g., ImageNet-C), natural distribution shifts due to dataset reproduction (e.g., ImageNet-v2, ImageNet-R), shifts due to novel subpopulations (e.g., BREEDS), and distribution shifts faced in the wild (e.g., WILDS).\n\nAs a starting point for theory development, we investigate ATC on a simple toy model that models distribution shift with varying proportions of the population with spurious features, as in Nagarajan et al. (2020). Finally, we note that although ATC achieves superior performance in our empirical evaluation, like all methods, it must fail (returns inconsistent estimates) on certain types of distribution shifts, per our impossibility result.\n\n# 2 PRIOR WORK \n\nOut-of-distribution detection. The main goal of OOD detection is to identify previously unseen examples, i.e., samples out of the support of training distribution. To accomplish this, modern methods utilize confidence or features learned by a deep network trained on some source data. Hendrycks \\\u0026 Gimpel (2016); Geifman \\\u0026 El-Yaniv (2017) used the confidence score of an (already) trained deep model to identify OOD points. Lakshminarayanan et al. (2016) use entropy of an ensemble model to evaluate prediction uncertainty on OOD points. To improve OOD detection with model confidence, Liang et al. (2017) propose to use temperature scaling and input perturbations. Jiang et al. (2018) propose to use scores based on the relative distance of the predicted class to the second class. Recently, residual flow-based methods were used to obtain a density model for OOD detection (Zhang et al., 2020). Ji et al. (2021) proposed a method based on subfunction error bounds to compute unreliability per sample. Refer to Ovadia et al. (2019); Ji et al. (2021) for an overview and comparison of methods for prediction uncertainty on OOD data.\n\nPredicting model generalization. Understanding generalization capabilities of overparameterized models on in-distribution data using conventional machine learning tools has been a focus of a long line of work; representative research includes Neyshabur et al. (2015; 2017); Neyshabur (2017); Neyshabur et al. (2018); Dziugaite \\\u0026 Roy (2017); Bartlett et al. (2017); Zhou et al. (2018); Long \\\u0026 Sedghi (2019); Nagarajan \\\u0026 Kolter (2019a). At a high level, this line of research bounds the generalization gap directly with complexity measures calculated on the trained model. However, these bounds typically remain numerically loose relative to the true generalization error (Zhang et al., 2016; Nagarajan \\\u0026 Kolter, 2019b). On the other hand, another line of research departs from complexitybased approaches to use unseen unlabeled data to predict in-distribution generalization (Platanios et al., 2016; 2017; Garg et al., 2021; Jiang et al., 2021).\n\nRelevant to our work are methods for predicting the error of a classifier on OOD data based on unlabeled data from the target (OOD) domain. These methods can be characterized into two broad categories: (i) Methods which explicitly predict correctness of the model on individual unlabeled points (Deng \\\u0026 Zheng, 2021; Jiang et al., 2021; Deng et al., 2021; Chen et al., 2021a); and (ii) Methods which directly obtain an estimate of error with unlabeled OOD data without making a point-wise prediction (Chen et al., 2021b; Guillory et al., 2021; Chuang et al., 2020).\nTo achieve a consistent estimate of the target accuracy, Jiang et al. (2021); Guillory et al. (2021) require calibration on target domain. However, these methods typically yield poor estimates as deep models trained and calibrated on some source data are seldom calibrated on previously unseen domains (Ovadia et al., 2019). Additionally, Deng \\\u0026 Zheng (2021); Guillory et al. (2021) derive model-based distribution statistics on unlabeled target set that correlate with the target accuracy and propose to use a subset of labeled target domains to learn a (linear) regression function that predicts model performance. However, there are two drawbacks with this approach: (i) the correlation of these distribution statistics can vary substantially as we consider different nature of shifts (refer to Sec. 5.1, where we empirically demonstrate this failure); (ii) even if there exists a (hypothetical) statistic with strong correlations, obtaining labeled target domains (even simulated ones) with strong correlations would require significant a priori knowledge about the nature of shift that, in general, might not be available before models are deployed in the wild. Nonetheless, in our work, we only assume access to labeled data from the source domain presuming no access to labeled target domains or information about how to simulate them.", "shape": "dot", "size": 10, "type": "Paragraph"}]);
+                  edges = new vis.DataSet([{"from": "https://arxiv.org/pdf/2201.04234", "to": "page_1", "width": 1}, {"from": "https://arxiv.org/pdf/2201.04234", "to": "page_2", "width": 1}, {"from": "https://arxiv.org/pdf/2201.04234", "to": "page_3", "width": 1}, {"from": "page_1", "to": "title_0", "width": 1}, {"from": "page_1", "to": "title_1", "width": 1}, {"from": "page_1", "to": "title_2", "width": 1}, {"from": "page_1", "to": "title_3", "width": 1}, {"from": "title_1", "to": "page_3", "width": 1}, {"from": "page_3", "to": "title_4", "width": 1}, {"from": "page_3", "to": "paragraph_0", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
